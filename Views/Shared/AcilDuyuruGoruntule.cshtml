@@ -1,0 +1,14 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Acildurum>
+
+<h2>Acil Duyurular</h2>
+
+<div class="list-group bg-red text-white">
+    @foreach (var duyuru in Model)
+    {
+        <div class="list-group-item">
+            <h5>@duyuru.Baslik</h5>
+            <p>@duyuru.Aciklama</p>
+            <small class="text-muted">Tarih: @duyuru.Tarih.ToString("g")</small>
+        </div>
+    }
+</div>

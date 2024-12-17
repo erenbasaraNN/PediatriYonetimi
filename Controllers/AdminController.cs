@@ -261,5 +261,45 @@ namespace PediatriYonetimi.Controllers
             var duyurular = await _context.Duyurular.ToListAsync();
             return View("Duyuru/DuyuruListesi", duyurular);
         }
+
+        [Route("AcilDuyuru/Listesi")]
+        public async Task<IActionResult> AcilDuyuruListesi()
+        {
+            var duyurular = await _context.AcilDurumlar.OrderByDescending(d => d.Tarih).ToListAsync();
+            return View("AcilDuyuru/AcilDuyuruListesi", duyurular);
+        }
+
+        [Route("AcilDuyuru/Ekle")]
+        public IActionResult AcilDuyuruEkle()
+        {
+            return View("AcilDuyuru/AcilDuyuruEkle");
+        }
+
+        [HttpPost]
+        [Route("AcilDuyuru/Ekle")]
+        public async Task<IActionResult> AcilDuyuruEkle(Acildurum duyuru)
+        {
+            if (ModelState.IsValid)
+            {
+                duyuru.Tarih = DateTime.Now; // Duyuru tarihi otomatik atanýr
+                _context.AcilDurumlar.Add(duyuru);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("AcilDuyuruListesi");
+            }
+            return View("AcilDuyuru/AcilDuyuruEkle", duyuru);
+        }
+
+        [Route("AcilDuyuru/Sil/{id}")]
+        public async Task<IActionResult> AcilDuyuruSil(int id)
+        {
+            var duyuru = await _context.AcilDurumlar.FindAsync(id);
+            if (duyuru != null)
+            {
+                _context.AcilDurumlar.Remove(duyuru);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("AcilDuyuruListesi");
+        }
+
     }
 }
