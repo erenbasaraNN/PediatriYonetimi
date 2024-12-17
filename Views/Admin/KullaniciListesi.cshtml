@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Kullanici>
+
+<h2>Kullanıcı Listesi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Email</th>
+            <th>Rol</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kullanici in Model)
+        {
+            <tr>
+                <td>@kullanici.Ad</td>
+                <td>@kullanici.Soyad</td>
+                <td>@kullanici.Email</td>
+                <td>@kullanici.Rol</td>
+            </tr>
+        }
+    </tbody>
+</table>

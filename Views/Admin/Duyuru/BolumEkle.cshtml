@@ -1,0 +1,24 @@
+﻿@model PediatriYonetimi.Models.Bolum
+
+<h2>Bölüm Ekle</h2>
+
+<form asp-action="BolumEkle" method="post">
+    <div class="form-group">
+        <label>Bölüm Adı</label>
+        <input asp-for="BolumAdi" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Bölüm Açıklaması</label>
+        <input asp-for="Aciklama" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Hasta Sayısı</label>
+        <input asp-for="HastaSayisi" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Boş Yatak Sayısı</label>
+        <input asp-for="BosYatakSayisi" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a asp-action="BolumListesi" class="btn btn-secondary">Geri Dön</a>
+</form>

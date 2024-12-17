@@ -1,0 +1,33 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Bolum>
+
+<h2>Bölüm Listesi</h2>
+<a asp-action="BolumEkle" class="btn btn-success mb-2">Bölüm Ekle</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Bölüm Adı</th>
+            <th>Bölüm Açıklaması</th>
+
+            <th>Hasta Sayısı</th>
+            <th>Boş Yatak Sayısı</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bolum in Model)
+        {
+            <tr>
+                <td>@bolum.BolumAdi</td>
+                <td>@bolum.Aciklama</td>
+                <td>@bolum.HastaSayisi</td>
+                <td>@bolum.BosYatakSayisi</td>
+                <td>
+                    <a asp-action="BolumDuzenle" asp-route-id="@bolum.Id" class="btn btn-primary btn-sm">Düzenle</a>
+                    <a asp-action="BolumSil" asp-route-id="@bolum.Id" class="btn btn-danger btn-sm"
+                       onclick="return confirm('Bu bölümü silmek istediğinize emin misiniz?');">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

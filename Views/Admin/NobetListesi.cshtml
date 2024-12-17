@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Nobet>
+
+<h2>Nöbet Listesi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nöbet Tarihi</th>
+            <th>Bölüm</th>
+            <th>Asistan</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var nobet in Model)
+        {
+            <tr>
+                <td>@nobet.NobetTarihi.ToShortDateString()</td>
+                <td>@nobet.Bolum.BolumAdi</td>
+                <td>@nobet.Asistan.Ad @nobet.Asistan.Soyad</td>
+            </tr>
+        }
+    </tbody>
+</table>

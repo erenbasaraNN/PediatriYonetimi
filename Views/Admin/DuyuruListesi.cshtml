@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Duyuru>
+
+<h2>Duyuru Listesi</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Başlık</th>
+            <th>İçerik</th>
+            <th>Yayın Tarihi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var duyuru in Model)
+        {
+            <tr>
+                <td>@duyuru.Baslik</td>
+                <td>@duyuru.Icerik</td>
+                <td>@duyuru.YayinTarihi.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
