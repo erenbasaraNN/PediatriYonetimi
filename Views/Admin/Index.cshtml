@@ -1,8 +1,11 @@
-﻿<h2>Admin Paneli</h2>
+﻿<h3 class="mt-4">Yönetim Paneli</h3>
 
-<ul>
-    <li><a href="@Url.Action("KullaniciListesi", "Admin")">Kullanıcı Listesi</a></li>
-    <li><a href="@Url.Action("BolumListesi", "Admin")">Bölüm Listesi</a></li>
-    <li><a href="@Url.Action("NobetListesi", "Admin")">Nöbet Listesi</a></li>
-    <li><a href="@Url.Action("DuyuruListesi", "Admin")">Duyuru Listesi</a></li>
-</ul>
+<div class="list-group">
+
+    <ul>
+        <a class="list-group-item list-group-item-action" href="@Url.Action("KullaniciListesi", "Admin")">Kullanıcı Listesi</a>
+        <a class="list-group-item list-group-item-action" href="@Url.Action("BolumListesi", "Admin")">Bölüm Listesi</a>
+        <a class="list-group-item list-group-item-action" href="@Url.Action("NobetListesi", "Admin")">Nöbet Listesi</a>
+        <a class="list-group-item list-group-item-action" href="@Url.Action("DuyuruListesi", "Admin")">Duyuru Listesi</a>
+    </ul>
+</div>
