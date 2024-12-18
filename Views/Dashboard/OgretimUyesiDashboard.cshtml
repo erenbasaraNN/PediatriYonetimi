@@ -1,54 +1,101 @@
 ﻿@{
-    ViewData["Title"] = "Ogretim Uyesi Dashboard";
-    ViewData["CalendarDataUrl"] = Url.Action("OgretimUyesiCalendarData", "Dashboard");
+    ViewData["Title"] = "Öğretim Üyesi Dashboard";
 }
 
-<h1>Ogretim Üyesi Dashboard</h1>
+<h1 class="text-center mt-4">Öğretim Üyesi Dashboard</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <h2>Onay Bekleyen Randevular</h2>
-        <ul class="list-group">
-            @foreach (var randevu in ViewBag.Randevular)
-            {
-                <li class="list-group-item">
-                    Asistan: @randevu.Asistan.Ad
-                    <br />
-                    Tarih: @randevu.RandevuMusaitlikDurumu.BaslangicSaati.ToString("g")
-                </li>
-            }
-        </ul>
-    </div>
-    <div class="col-md-6">
-        <h2>Randevu Müsaitliklerim</h2>
-        <ul class="list-group">
-            @foreach (var musaitlik in ViewBag.Musaitlikler)
-            {
-                <li class="list-group-item">
-                    @musaitlik.BaslangicSaati.ToString("g") -
-                    @musaitlik.BitisSaati.ToString("g")
-                </li>
-            }
-        </ul>
-    </div>
-</div>
+<div class="container mt-5">
+    <div class="row g-4">
+        <!-- Randevular -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Onaylı Randevularım</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var randevu in ViewBag.Randevular)
+                        {
+                            <li class="list-group-item">
+                                <strong>Başlangıç:</strong> @randevu.RandevuMusaitlikDurumu.BaslangicSaati.ToString("g") |
+                                <strong>Bitiş:</strong> @randevu.RandevuMusaitlikDurumu.BitisSaati.ToString("g")
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="@Url.Action("MusaitlikListesi", "OgretimUyesi")" class="btn btn-outline-primary">Müsaitlikleri Yönet</a>
+                </div>
+            </div>
+        </div>
 
-<div class="row mt-4">
-    
-    <div class="col-md-6">
-        <h2>Acil Durumlar</h2>
-        <ul class="list-group">
-            @foreach (var acilDurum in ViewBag.AcilDurumlar)
-            {
-                <li class="list-group-item">
-                    <strong>@acilDurum.Baslik:</strong> @acilDurum.Aciklama
-                </li>
-            }
-        </ul>
-    </div>
-</div>
+        <!-- Müsaitlik Saatlerim -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Müsaitlik Saatlerim</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var musaitlik in ViewBag.Musaitlikler)
+                        {
+                            <li class="list-group-item">
+                                <strong>Başlangıç:</strong> @musaitlik.BaslangicSaati.ToString("g") |
+                                <strong>Bitiş:</strong> @musaitlik.BitisSaati.ToString("g")
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <a href="@Url.Action("MusaitlikEkle", "OgretimUyesi")" class="btn btn-outline-success">Yeni Müsaitlik Ekle</a>
+                </div>
+            </div>
+        </div>
 
-<h1>Öğretim Üyesi Takvim</h1>
-<div id="calendar-container">
-    @Html.Partial("_Calendar")
+        <!-- Duyurular -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0">Duyurular</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var duyuru in ViewBag.Duyurular)
+                        {
+                            <li class="list-group-item">
+                                <strong>@duyuru.Baslik:</strong> @duyuru.Icerik
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Asistanlar -->
+        <div class="col-lg-6 col-md-12 text-center">
+            <a href="@Url.Action("AsistanBilgileri", "Dashboard")" class="btn btn-outline-info">
+                Asistan Bilgilerini Görüntüle
+            </a>
+        </div>
+
+
+        <!-- Acil Durumlar -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Acil Durumlar</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var acilDurum in ViewBag.AcilDurumlar)
+                        {
+                            <li class="list-group-item">
+                                <strong>@acilDurum.Baslik:</strong> @acilDurum.Aciklama
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

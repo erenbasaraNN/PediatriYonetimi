@@ -1,0 +1,32 @@
+﻿@model IEnumerable<dynamic>
+@{
+    ViewData["Title"] = "Asistan Bilgileri";
+}
+
+<h1 class="text-center mt-4">Asistan Bilgileri</h1>
+
+<div class="container mt-4">
+    <table class="table table-striped table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Ad</th>
+                <th>Soyad</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Adres</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var asistan in Model)
+            {
+                <tr>
+                    <td>@asistan.Ad</td>
+                    <td>@asistan.Soyad</td>
+                    <td>@asistan.Email</td>
+                    <td>@asistan.Telefon</td>
+                    <td>@asistan.Adres</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

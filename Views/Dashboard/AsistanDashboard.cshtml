@@ -3,54 +3,103 @@
     ViewData["CalendarDataUrl"] = Url.Action("AsistanCalendarData", "Dashboard");
 }
 
-<h1>Asistan Dashboard</h1>
+<h1 class="text-center mt-4">Asistan Dashboard</h1>
 
-<div class="row">
-    <div class="col-md-6">
-        <h2>Randevularım</h2>
-        <ul class="list-group">
-            @foreach (var randevu in ViewBag.Randevular)
-            {
-                <li class="list-group-item">
-                    @randevu.RandevuMusaitlikDurumu.BaslangicSaati.ToString("g") -
-                    @randevu.RandevuMusaitlikDurumu.BitisSaati.ToString("g")
-                </li>
-            }
-        </ul>
+<div class="container mt-5">
+    <div class="row g-4">
+        <!-- Randevularım -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <h5 class="mb-0">Randevularım</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var randevu in ViewBag.Randevular)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    @randevu.RandevuMusaitlikDurumu.BaslangicSaati.ToString("g") -
+                                    @randevu.RandevuMusaitlikDurumu.BitisSaati.ToString("g")
+                                </span>
+                                <span class="badge bg-info">Randevu</span>
+                            </li>
+                        }
+                    </ul>
+                    <div class="d-flex justify-content-between mt-3">
+                        <a href="@Url.Action("RandevuListesi", "Asistan")" class="btn btn-outline-primary">Tüm Randevularımı Gör</a>
+                        <a href="@Url.Action("MusaitlikListesi", "Asistan")" class="btn btn-outline-success">Randevu Al</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nöbetlerim -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white d-flex align-items-center">
+                    <i class="bi bi-clock-history me-2"></i>
+                    <h5 class="mb-0">Nöbetlerim</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var nobet in ViewBag.Nobetler)
+                        {
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>
+                                    @nobet.Bolum.BolumAdi - @nobet.NobetTarihi.ToString("D")
+                                </span>
+                                <span class="badge bg-success">Nöbet</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-6">
-        <h2>Nöbetlerim</h2>
-        <ul class="list-group">
-            @foreach (var nobet in ViewBag.Nobetler)
-            {
-                <li class="list-group-item">
-                    @nobet.Bolum.BolumAdi - @nobet.NobetTarihi.ToString("D")
-                </li>
-            }
-        </ul>
+
+    <div class="row g-4 mt-4">
+        <!-- Acil Durumlar -->
+        <div class="col-lg-6 col-md-12">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white d-flex align-items-center">
+                    <i class="bi bi-exclamation-circle me-2"></i>
+                    <h5 class="mb-0">Acil Durumlar</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        @foreach (var acilDurum in ViewBag.AcilDurumlar)
+                        {
+                            <li class="list-group-item">
+                                <strong>@acilDurum.Baslik:</strong> @acilDurum.Aciklama
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Takvim -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-dark text-white d-flex align-items-center">
+                    <i class="bi bi-calendar4-week me-2"></i>
+                    <h5 class="mb-0">Takvim</h5>
+                </div>
+                <div class="card-body">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<div class="row mt-4">
-    
-    <div class="col-md-6">
-        <h2>Acil Durumlar</h2>
-        <ul class="list-group">
-            @foreach (var acilDurum in ViewBag.AcilDurumlar)
-            {
-                <li class="list-group-item">
-                    <strong>@acilDurum.Baslik:</strong> @acilDurum.Aciklama
-                </li>
-            }
-        </ul>
-    </div>
-</div>
-
-<div id="calendar"></div>
 
 @section Scripts {
     <script>
-                document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
             var calendarEl = document.getElementById('calendar');
 
             if (calendarEl) {
@@ -62,7 +111,7 @@
                         center: 'title',
                         right: 'timeGridWeek,timeGridDay'
                     },
-                    events: '/Dashboard/AsistanCalendarData', // Burada API'yi test etmiştiniz, çalışıyor.
+                    events: '@ViewData["CalendarDataUrl"]',
                     editable: false
                 });
 
@@ -71,6 +120,5 @@
                 console.error("Calendar element not found.");
             }
         });
-
     </script>
 }

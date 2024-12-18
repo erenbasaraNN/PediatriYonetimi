@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h1 class="text-center mt-4">Admin Dashboard</h1>
+
+<div class="container mt-5">
+    <div class="row g-4">
+        <!-- Acil Duyurular -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Acil Duyurular</h5>
+                    <span class="badge bg-light text-dark">@ViewBag.AcilDuyuruCount</span>
+                </div>
+                <div class="card-body text-center">
+                    <a href="@Url.Action("AcilDuyuruListesi", "Admin")" class="btn btn-outline-danger">Tüm Acil Duyurular</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bölümler -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Bölümler</h5>
+                    <span class="badge bg-light text-dark">@ViewBag.BolumCount</span>
+                </div>
+                <div class="card-body text-center">
+                    <a href="@Url.Action("BolumListesi", "Admin")" class="btn btn-outline-primary">Tüm Bölümler</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Duyurular -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-warning text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Duyurular</h5>
+                    <span class="badge bg-light text-dark">@ViewBag.DuyuruCount</span>
+                </div>
+                <div class="card-body text-center">
+                    <a href="@Url.Action("DuyuruListesi", "Admin")" class="btn btn-outline-warning">Tüm Duyurular</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kullanıcılar -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Kullanıcılar</h5>
+                    <span class="badge bg-light text-dark">@ViewBag.KullaniciCount</span>
+                </div>
+                <div class="card-body text-center">
+                    <a href="@Url.Action("KullaniciListesi", "Admin")" class="btn btn-outline-info">Tüm Kullanıcılar</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nöbetler -->
+        <div class="col-lg-4 col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white d-flex justify-content-between">
+                    <h5 class="mb-0">Nöbetler</h5>
+                    <span class="badge bg-light text-dark">@ViewBag.NobetCount</span>
+                </div>
+                <div class="card-body text-center">
+                    <a href="@Url.Action("NobetListesi", "Admin")" class="btn btn-outline-success">Tüm Nöbetler</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

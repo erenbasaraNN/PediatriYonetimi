@@ -27,12 +27,28 @@ namespace PediatriYonetimi.Controllers
                 return RedirectToAction("AsistanDashboard");
             else if (userRole == "OgretimUyesi")
                 return RedirectToAction("OgretimUyesiDashboard");
-
+            else if (userRole == "Admin")
+                return RedirectToAction("AdminDashboard");
             return Unauthorized();
+        }
+
+        [Route("Index")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminDashboard()
+        {
+            ViewBag.AcilDuyuruCount = _context.AcilDurumlar.Count();
+            ViewBag.BolumCount = _context.Bolumler.Count();
+            ViewBag.DuyuruCount = _context.Duyurular.Count();
+            ViewBag.KullaniciCount = _context.Users.Count();
+            ViewBag.NobetCount = _context.Nobetler.Count();
+
+            return View();
         }
 
         // Dashboard for Asistan
         [Route("Asistan")]
+        [Authorize(Roles = "Asistan")]
+
         public async Task<IActionResult> AsistanDashboard()
         {
             var asistanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -73,42 +89,45 @@ namespace PediatriYonetimi.Controllers
 
         // Dashboard for Öğretim Üyesi
         [Route("OgretimUyesi")]
+        [Authorize(Roles = "OgretimUyesi")]
+
         public async Task<IActionResult> OgretimUyesiDashboard()
         {
             var ogretimUyesiId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            // Fetch RandevuMusaitlikDurumu created by this OgretimUyesi
-            var musaitlikler = await _context.RandevuMusaitlikleri
-                .Where(m => m.OgretimUyesiId == ogretimUyesiId)
-                .OrderBy(m => m.BaslangicSaati)
-                .ToListAsync();
-
-            // Fetch Randevular associated with this OgretimUyesi
+            // Randevular
             var randevular = await _context.Randevular
                 .Include(r => r.RandevuMusaitlikDurumu)
                 .Where(r => r.RandevuMusaitlikDurumu.OgretimUyesiId == ogretimUyesiId)
                 .OrderBy(r => r.RandevuMusaitlikDurumu.BaslangicSaati)
                 .ToListAsync();
 
-            // Fetch recent Duyurular
+            // Müsaitlikler
+            var musaitlikler = await _context.RandevuMusaitlikleri
+                .Where(m => m.OgretimUyesiId == ogretimUyesiId)
+                .OrderBy(m => m.BaslangicSaati)
+                .ToListAsync();
+
+            // Duyurular
             var duyurular = await _context.Duyurular
                 .OrderByDescending(d => d.YayinTarihi)
                 .Take(5)
                 .ToListAsync();
 
-            // Fetch recent Acil Durumlar
+            // Acil Durumlar
             var acilDurumlar = await _context.AcilDurumlar
                 .OrderByDescending(a => a.Tarih)
                 .Take(5)
                 .ToListAsync();
 
-            ViewBag.Musaitlikler = musaitlikler;
             ViewBag.Randevular = randevular;
+            ViewBag.Musaitlikler = musaitlikler;
             ViewBag.Duyurular = duyurular;
             ViewBag.AcilDurumlar = acilDurumlar;
 
             return View();
         }
+
 
         [Route("AsistanCalendarData")]
         public async Task<IActionResult> AsistanCalendarData()
@@ -141,6 +160,25 @@ namespace PediatriYonetimi.Controllers
 
             var events = randevular.Concat(nobetler);
             return Json(events);
+        }
+        [Route("Dashboard/OgretimUyesi/AsistanBilgileri")]
+        public async Task<IActionResult> AsistanBilgileri()
+        {
+            // Tüm asistanları getir
+            var asistanlar = await _context.Users
+                .Where(u => u.Rol == "Asistan")
+                .Select(u => new
+                {
+                    u.Id,
+                    u.Ad,
+                    u.Soyad,
+                    u.Email,
+                    u.Telefon,
+                    u.Adres
+                })
+                .ToListAsync();
+
+            return View(asistanlar);
         }
 
         // Calendar Data for Öğretim Üyesi
