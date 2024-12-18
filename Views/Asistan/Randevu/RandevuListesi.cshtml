@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.Randevu>
+
+<h2>Randevularım</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Öğretim Üyesi</th>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var randevu in Model)
+        {
+            <tr>
+                <td>@randevu.RandevuMusaitlikDurumu.OgretimUyesi.Ad @randevu.RandevuMusaitlikDurumu.OgretimUyesi.Soyad</td>
+                <td>@randevu.RandevuMusaitlikDurumu.BaslangicSaati</td>
+                <td>@randevu.RandevuMusaitlikDurumu.BitisSaati</td>
+            </tr>
+        }
+    </tbody>
+</table>

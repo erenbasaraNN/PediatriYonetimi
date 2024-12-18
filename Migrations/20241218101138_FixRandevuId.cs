@@ -5,7 +5,7 @@
 namespace PediatriYonetimi.Migrations
 {
     /// <inheritdoc />
-    public partial class KullaniciUpdate2 : Migration
+    public partial class FixRandevuId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

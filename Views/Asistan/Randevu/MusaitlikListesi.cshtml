@@ -1,0 +1,27 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.RandevuMusaitlikDurumu>
+
+<h2>Öğretim Üyelerinin Müsait Saatleri</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Öğretim Üyesi</th>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var musaitlik in Model)
+        {
+            <tr>
+                <td>@musaitlik.OgretimUyesi.Ad @musaitlik.OgretimUyesi.Soyad</td>
+                <td>@musaitlik.BaslangicSaati</td>
+                <td>@musaitlik.BitisSaati</td>
+                <td>
+                    <a asp-action="RandevuAl" asp-route-id="@musaitlik.Id" class="btn btn-primary btn-sm">Randevu Al</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Asistan Dashboard";
+    ViewData["CalendarDataUrl"] = Url.Action("AsistanCalendarData", "Dashboard");
+}
+
+<h1>Asistan Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <h2>Randevularım</h2>
+        <ul class="list-group">
+            @foreach (var randevu in ViewBag.Randevular)
+            {
+                <li class="list-group-item">
+                    @randevu.RandevuMusaitlikDurumu.BaslangicSaati.ToString("g") -
+                    @randevu.RandevuMusaitlikDurumu.BitisSaati.ToString("g")
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-6">
+        <h2>Nöbetlerim</h2>
+        <ul class="list-group">
+            @foreach (var nobet in ViewBag.Nobetler)
+            {
+                <li class="list-group-item">
+                    @nobet.Bolum.BolumAdi - @nobet.NobetTarihi.ToString("D")
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="row mt-4">
+    
+    <div class="col-md-6">
+        <h2>Acil Durumlar</h2>
+        <ul class="list-group">
+            @foreach (var acilDurum in ViewBag.AcilDurumlar)
+            {
+                <li class="list-group-item">
+                    <strong>@acilDurum.Baslik:</strong> @acilDurum.Aciklama
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div id="calendar"></div>
+
+@section Scripts {
+    <script>
+                document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            if (calendarEl) {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'timeGridWeek',
+                    locale: 'tr',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'timeGridWeek,timeGridDay'
+                    },
+                    events: '/Dashboard/AsistanCalendarData', // Burada API'yi test etmiştiniz, çalışıyor.
+                    editable: false
+                });
+
+                calendar.render();
+            } else {
+                console.error("Calendar element not found.");
+            }
+        });
+
+    </script>
+}

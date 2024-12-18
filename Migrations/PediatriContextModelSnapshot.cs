@@ -356,20 +356,22 @@ namespace PediatriYonetimi.Migrations
 
                     b.Property<string>("AsistanId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("OgretimUyesiId")
-                        .IsRequired()
+                    b.Property<string>("KullaniciId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("RandevuMusaitlikDurumuId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AsistanId");
 
-                    b.HasIndex("OgretimUyesiId");
+                    b.HasIndex("KullaniciId");
+
+                    b.HasIndex("RandevuMusaitlikDurumuId");
 
                     b.ToTable("Randevular");
                 });
@@ -389,7 +391,6 @@ namespace PediatriYonetimi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OgretimUyesiId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -489,20 +490,24 @@ namespace PediatriYonetimi.Migrations
             modelBuilder.Entity("PediatriYonetimi.Models.Randevu", b =>
                 {
                     b.HasOne("PediatriYonetimi.Models.Kullanici", "Asistan")
-                        .WithMany("Randevular")
+                        .WithMany()
                         .HasForeignKey("AsistanId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("PediatriYonetimi.Models.Kullanici", "OgretimUyesi")
-                        .WithMany()
-                        .HasForeignKey("OgretimUyesiId")
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
+                        .WithMany("Randevular")
+                        .HasForeignKey("KullaniciId");
+
+                    b.HasOne("PediatriYonetimi.Models.RandevuMusaitlikDurumu", "RandevuMusaitlikDurumu")
+                        .WithMany("Randevular")
+                        .HasForeignKey("RandevuMusaitlikDurumuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Asistan");
 
-                    b.Navigation("OgretimUyesi");
+                    b.Navigation("RandevuMusaitlikDurumu");
                 });
 
             modelBuilder.Entity("PediatriYonetimi.Models.RandevuMusaitlikDurumu", b =>
@@ -510,8 +515,7 @@ namespace PediatriYonetimi.Migrations
                     b.HasOne("PediatriYonetimi.Models.Kullanici", "OgretimUyesi")
                         .WithMany()
                         .HasForeignKey("OgretimUyesiId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OgretimUyesi");
                 });
@@ -525,6 +529,11 @@ namespace PediatriYonetimi.Migrations
                 {
                     b.Navigation("Nobetler");
 
+                    b.Navigation("Randevular");
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.RandevuMusaitlikDurumu", b =>
+                {
                     b.Navigation("Randevular");
                 });
 #pragma warning restore 612, 618

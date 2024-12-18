@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PediatriYonetimi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class FinalFixForRandevu : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -221,39 +221,12 @@ namespace PediatriYonetimi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Randevular",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Tarih = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AsistanId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    OgretimUyesiId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Randevular", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Randevular_AspNetUsers_AsistanId",
-                        column: x => x.AsistanId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Randevular_AspNetUsers_OgretimUyesiId",
-                        column: x => x.OgretimUyesiId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RandevuMusaitlikleri",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OgretimUyesiId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OgretimUyesiId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     BaslangicSaati = table.Column<DateTime>(type: "datetime2", nullable: false),
                     BitisSaati = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -291,6 +264,38 @@ namespace PediatriYonetimi.Migrations
                         name: "FK_Nobetler_Bolumler_BolumId",
                         column: x => x.BolumId,
                         principalTable: "Bolumler",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Randevular",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RandevuMusaitlikDurumuId = table.Column<int>(type: "int", nullable: false),
+                    AsistanId = table.Column<string>(type: "nvarchar(450)", maxLength: 450, nullable: false),
+                    KullaniciId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Randevular", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Randevular_AspNetUsers_AsistanId",
+                        column: x => x.AsistanId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Randevular_AspNetUsers_KullaniciId",
+                        column: x => x.KullaniciId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Randevular_RandevuMusaitlikleri_RandevuMusaitlikDurumuId",
+                        column: x => x.RandevuMusaitlikDurumuId,
+                        principalTable: "RandevuMusaitlikleri",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -350,9 +355,14 @@ namespace PediatriYonetimi.Migrations
                 column: "AsistanId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Randevular_OgretimUyesiId",
+                name: "IX_Randevular_KullaniciId",
                 table: "Randevular",
-                column: "OgretimUyesiId");
+                column: "KullaniciId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Randevular_RandevuMusaitlikDurumuId",
+                table: "Randevular",
+                column: "RandevuMusaitlikDurumuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RandevuMusaitlikleri_OgretimUyesiId",
@@ -391,9 +401,6 @@ namespace PediatriYonetimi.Migrations
                 name: "Randevular");
 
             migrationBuilder.DropTable(
-                name: "RandevuMusaitlikleri");
-
-            migrationBuilder.DropTable(
                 name: "Roller");
 
             migrationBuilder.DropTable(
@@ -401,6 +408,9 @@ namespace PediatriYonetimi.Migrations
 
             migrationBuilder.DropTable(
                 name: "Bolumler");
+
+            migrationBuilder.DropTable(
+                name: "RandevuMusaitlikleri");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

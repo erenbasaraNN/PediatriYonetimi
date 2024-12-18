@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PediatriYonetimi.Models.RandevuMusaitlikDurumu>
+
+<h2>Müsaitlik Saatlerim</h2>
+
+<a asp-action="MusaitlikEkle" class="btn btn-success mb-2">Yeni Müsaitlik Ekle</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var musaitlik in Model)
+        {
+            <tr>
+                <td>@musaitlik.BaslangicSaati</td>
+                <td>@musaitlik.BitisSaati</td>
+            </tr>
+        }
+    </tbody>
+</table>

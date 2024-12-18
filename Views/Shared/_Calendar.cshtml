@@ -1,0 +1,28 @@
+﻿<div id="calendar"></div>
+
+@section Scripts {
+    <script>
+                document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            if (calendarEl) {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'timeGridWeek',
+                    locale: 'tr',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'timeGridWeek,timeGridDay'
+                    },
+                    events: '/Dashboard/AsistanCalendarData', // Burada API'yi test etmiştiniz, çalışıyor.
+                    editable: false
+                });
+
+                calendar.render();
+            } else {
+                console.error("Calendar element not found.");
+            }
+        });
+
+    </script>
+}

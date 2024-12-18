@@ -1,13 +1,22 @@
-﻿namespace PediatriYonetimi.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Randevu
+namespace PediatriYonetimi.Models
 {
-    public int Id { get; set; }
-    public DateTime Tarih { get; set; }
-    public string AsistanId { get; set; } // Randevu alan asistan
-    public string OgretimUyesiId { get; set; } // Randevu yapılan öğretim üyesi
+    public class Randevu
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Identity column
+        public int Id { get; set; }
 
-    // İlişkiler
-    public Kullanici Asistan { get; set; }
-    public Kullanici OgretimUyesi { get; set; }
+        [Required]
+        public int RandevuMusaitlikDurumuId { get; set; }
+
+        [Required]
+        [StringLength(450)]
+        public string AsistanId { get; set; } = string.Empty;
+
+        public RandevuMusaitlikDurumu? RandevuMusaitlikDurumu { get; set; }
+        public Kullanici? Asistan { get; set; }
+    }
 }

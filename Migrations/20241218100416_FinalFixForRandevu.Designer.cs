@@ -12,8 +12,8 @@ using PediatriYonetimi.Models;
 namespace PediatriYonetimi.Migrations
 {
     [DbContext(typeof(PediatriContext))]
-    [Migration("20241217212029_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241218100416_FinalFixForRandevu")]
+    partial class FinalFixForRandevu
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,142 +24,6 @@ namespace PediatriYonetimi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Bolum", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("BolumAdi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("BosYatakSayisi")
-                        .HasColumnType("int");
-
-                    b.Property<int>("HastaSayisi")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Bolumler");
-                });
-
-            modelBuilder.Entity("Duyuru", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Baslik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Icerik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("YayinTarihi")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Duyurular");
-                });
-
-            modelBuilder.Entity("Kullanici", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Ad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Adres")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Rol")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Soyad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -298,7 +162,167 @@ namespace PediatriYonetimi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Nobet", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Acildurum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Baslik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Tarih")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AcilDurumlar");
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.Bolum", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Aciklama")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BolumAdi")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("BosYatakSayisi")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HastaSayisi")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Bolumler");
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.Duyuru", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Baslik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Icerik")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("YayinTarihi")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Duyurular");
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.Kullanici", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Ad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Adres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Rol")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Soyad")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefon")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.Nobet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -325,31 +349,7 @@ namespace PediatriYonetimi.Migrations
                     b.ToTable("Nobetler");
                 });
 
-            modelBuilder.Entity("PediatriYonetimi.Models.Acildurum", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Baslik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AcilDurumlar");
-                });
-
-            modelBuilder.Entity("Randevu", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Randevu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -359,25 +359,27 @@ namespace PediatriYonetimi.Migrations
 
                     b.Property<string>("AsistanId")
                         .IsRequired()
+                        .HasMaxLength(450)
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("OgretimUyesiId")
-                        .IsRequired()
+                    b.Property<string>("KullaniciId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("RandevuMusaitlikDurumuId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AsistanId");
 
-                    b.HasIndex("OgretimUyesiId");
+                    b.HasIndex("KullaniciId");
+
+                    b.HasIndex("RandevuMusaitlikDurumuId");
 
                     b.ToTable("Randevular");
                 });
 
-            modelBuilder.Entity("RandevuMusaitlikDurumu", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.RandevuMusaitlikDurumu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -392,7 +394,6 @@ namespace PediatriYonetimi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OgretimUyesiId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -402,7 +403,7 @@ namespace PediatriYonetimi.Migrations
                     b.ToTable("RandevuMusaitlikleri");
                 });
 
-            modelBuilder.Entity("Rol", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Rol", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -430,7 +431,7 @@ namespace PediatriYonetimi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Kullanici", null)
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -439,7 +440,7 @@ namespace PediatriYonetimi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Kullanici", null)
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -454,7 +455,7 @@ namespace PediatriYonetimi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Kullanici", null)
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -463,22 +464,22 @@ namespace PediatriYonetimi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Kullanici", null)
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Nobet", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Nobet", b =>
                 {
-                    b.HasOne("Bolum", "Bolum")
+                    b.HasOne("PediatriYonetimi.Models.Bolum", "Bolum")
                         .WithMany("Nobetler")
                         .HasForeignKey("BolumId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Kullanici", "Asistan")
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", "Asistan")
                         .WithMany("Nobetler")
                         .HasForeignKey("KullaniciId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -489,45 +490,53 @@ namespace PediatriYonetimi.Migrations
                     b.Navigation("Bolum");
                 });
 
-            modelBuilder.Entity("Randevu", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Randevu", b =>
                 {
-                    b.HasOne("Kullanici", "Asistan")
-                        .WithMany("Randevular")
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", "Asistan")
+                        .WithMany()
                         .HasForeignKey("AsistanId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Kullanici", "OgretimUyesi")
-                        .WithMany()
-                        .HasForeignKey("OgretimUyesiId")
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", null)
+                        .WithMany("Randevular")
+                        .HasForeignKey("KullaniciId");
+
+                    b.HasOne("PediatriYonetimi.Models.RandevuMusaitlikDurumu", "RandevuMusaitlikDurumu")
+                        .WithMany("Randevular")
+                        .HasForeignKey("RandevuMusaitlikDurumuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Asistan");
 
-                    b.Navigation("OgretimUyesi");
+                    b.Navigation("RandevuMusaitlikDurumu");
                 });
 
-            modelBuilder.Entity("RandevuMusaitlikDurumu", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.RandevuMusaitlikDurumu", b =>
                 {
-                    b.HasOne("Kullanici", "OgretimUyesi")
+                    b.HasOne("PediatriYonetimi.Models.Kullanici", "OgretimUyesi")
                         .WithMany()
                         .HasForeignKey("OgretimUyesiId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("OgretimUyesi");
                 });
 
-            modelBuilder.Entity("Bolum", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Bolum", b =>
                 {
                     b.Navigation("Nobetler");
                 });
 
-            modelBuilder.Entity("Kullanici", b =>
+            modelBuilder.Entity("PediatriYonetimi.Models.Kullanici", b =>
                 {
                     b.Navigation("Nobetler");
 
+                    b.Navigation("Randevular");
+                });
+
+            modelBuilder.Entity("PediatriYonetimi.Models.RandevuMusaitlikDurumu", b =>
+                {
                     b.Navigation("Randevular");
                 });
 #pragma warning restore 612, 618

@@ -1,0 +1,15 @@
+﻿@model PediatriYonetimi.Models.RandevuMusaitlikDurumu
+
+<h2>Müsaitlik Ekle</h2>
+
+<form asp-action="MusaitlikEkle" method="post">
+    <div class="form-group">
+        <label>Başlangıç Saati</label>
+        <input asp-for="BaslangicSaati" type="datetime-local" class="form-control" required />
+    </div>
+    <div class="form-group">
+        <label>Bitiş Saati</label>
+        <input asp-for="BitisSaati" type="datetime-local" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>

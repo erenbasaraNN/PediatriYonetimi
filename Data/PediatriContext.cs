@@ -28,20 +28,6 @@ namespace PediatriYonetimi.Models
                 .HasForeignKey(n => n.KullaniciId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Kullanici - Randevu (Asistan) ilişkisi
-            modelBuilder.Entity<Randevu>()
-                .HasOne(r => r.Asistan)
-                .WithMany(u => u.Randevular)
-                .HasForeignKey(r => r.AsistanId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // Kullanici - Randevu (OgretimUyesi) ilişkisi
-            modelBuilder.Entity<Randevu>()
-                .HasOne(r => r.OgretimUyesi)
-                .WithMany()
-                .HasForeignKey(r => r.OgretimUyesiId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             // Bölüm - Nobet ilişkisi
             modelBuilder.Entity<Nobet>()
                 .HasOne(n => n.Bolum)
@@ -49,12 +35,27 @@ namespace PediatriYonetimi.Models
                 .HasForeignKey(n => n.BolumId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Randevu - RandevuMüsaitlik ilişkisi
+            // Kullanıcı - Randevu Musaitlik İlişkisi (Öğretim Üyesi)
             modelBuilder.Entity<RandevuMusaitlikDurumu>()
-                .HasOne(rm => rm.OgretimUyesi)
+                .HasOne(m => m.OgretimUyesi)
                 .WithMany()
-                .HasForeignKey(rm => rm.OgretimUyesiId)
+                .HasForeignKey(m => m.OgretimUyesiId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // Randevu - RandevuMusaitlikDurumu İlişkisi
+            modelBuilder.Entity<Randevu>()
+                .HasOne(r => r.RandevuMusaitlikDurumu)
+                .WithMany(m => m.Randevular)
+                .HasForeignKey(r => r.RandevuMusaitlikDurumuId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Randevu - Kullanıcı İlişkisi (Asistan)
+            modelBuilder.Entity<Randevu>()
+                .HasOne(r => r.Asistan)
+                .WithMany()
+                .HasForeignKey(r => r.AsistanId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

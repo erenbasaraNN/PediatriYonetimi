@@ -262,6 +262,37 @@ namespace PediatriYonetimi.Controllers
             return View("Duyuru/DuyuruListesi", duyurular);
         }
 
+        [Route("Duyuru/Ekle")]
+        public IActionResult DuyuruEkle()
+        {
+            return View("Duyuru/DuyuruEkle");
+        }
+
+        [HttpPost]
+        [Route("Duyuru/Ekle")]
+        public async Task<IActionResult> DuyuruEkle(Duyuru duyuru)
+        {
+            if (ModelState.IsValid)
+            {
+                duyuru.YayinTarihi = DateTime.Now; // Duyuru tarihi otomatik atanýr
+                _context.Duyurular.Add(duyuru);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("DuyuruListesi");
+            }
+            return View("Duyuru/DuyuruEkle", duyuru);
+        }
+
+        [Route("Duyuru/Sil/{id}")]
+        public async Task<IActionResult> DuyuruSil(int id)
+        {
+            var duyuru = await _context.Duyurular.FindAsync(id);
+            if (duyuru != null)
+            {
+                _context.Duyurular.Remove(duyuru);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("DuyuruListesi");
+        }
         [Route("AcilDuyuru/Listesi")]
         public async Task<IActionResult> AcilDuyuruListesi()
         {

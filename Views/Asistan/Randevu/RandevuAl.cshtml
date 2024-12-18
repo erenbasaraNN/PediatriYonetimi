@@ -1,0 +1,8 @@
+﻿@model PediatriYonetimi.Models.Randevu
+
+<form asp-action="RandevuAl" method="post">
+    <input type="hidden" asp-for="RandevuMusaitlikDurumuId" />
+    <input type="hidden" asp-for="AsistanId" />
+
+    <button type="submit" class="btn btn-primary">Randevuyu Onayla</button>
+</form>
