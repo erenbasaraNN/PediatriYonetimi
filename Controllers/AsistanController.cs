@@ -116,5 +116,38 @@ namespace PediatriYonetimi.Controllers
                 return View("Error");
             }
         }
+        [HttpPost]
+        [Route("Randevu/Sil/{id}")]
+        public async Task<IActionResult> RandevuSil(int id)
+        {
+            try
+            {
+                var asistanId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Silinmek istenen randevuyu bul
+                var randevu = await _context.Randevular
+                    .FirstOrDefaultAsync(r => r.Id == id && r.AsistanId == asistanId);
+
+                if (randevu == null)
+                {
+                    TempData["ErrorMessage"] = "Randevu bulunamadı veya silme yetkiniz yok.";
+                    return RedirectToAction("RandevuListesi");
+                }
+
+                // Randevuyu kaldır
+                _context.Randevular.Remove(randevu);
+                await _context.SaveChangesAsync();
+
+                TempData["SuccessMessage"] = "Randevu başarıyla silindi.";
+                return RedirectToAction("RandevuListesi");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting Randevu");
+                TempData["ErrorMessage"] = "Randevu silinirken bir hata oluştu.";
+                return RedirectToAction("RandevuListesi");
+            }
+        }
+
     }
 }

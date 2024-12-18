@@ -17,6 +17,11 @@
                 <td>@randevu.RandevuMusaitlikDurumu.OgretimUyesi.Ad @randevu.RandevuMusaitlikDurumu.OgretimUyesi.Soyad</td>
                 <td>@randevu.RandevuMusaitlikDurumu.BaslangicSaati</td>
                 <td>@randevu.RandevuMusaitlikDurumu.BitisSaati</td>
+                <td>
+                    <form asp-action="RandevuSil" asp-route-id="@randevu.Id" method="post" onsubmit="return confirm('Bu randevuyu silmek istediğinize emin misiniz?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                    </form>
+                </td>
             </tr>
         }
     </tbody>
